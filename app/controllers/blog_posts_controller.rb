@@ -1,12 +1,17 @@
 class BlogPostsController < ApplicationController
 
   before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
-  
+
   def index
-    @blog_posts = BlogPost.all #Collection of all the instances of BlogPost in our database
+    @blog_posts = BlogPost.all.page(params[:page])
   end
 
   def show
+    @comment = Comment.new
+  end
+
+  def user_posts
+    @user = User.find_by(username: params[:name])
   end
 
   def edit
@@ -52,7 +57,7 @@ class BlogPostsController < ApplicationController
         @blog_post = BlogPost.find(params[:id])
     end
     def blog_post_params
-      params.require(:blog_post).permit(:title, :blog_entry, :author)
+      params.require(:blog_post).permit(:title, :blog_entry, :user_id)
     end
 
 end

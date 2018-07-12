@@ -2,8 +2,8 @@
 <% if @blog_post.errors.any? %>
   <div id="error_explanation">
     <h2>
-      <%= pluralize(@blog_posts.errors.count, "error") %>
-      prohibited this blog_pst from being saved:
+      <%= pluralize(@blog_post.errors.count, "error") %>
+      prohibited this blog_post from being saved:
     </h2>
     <ul>
       <% @blog_post.errors.full_messages.each do |message| %>
@@ -13,15 +13,18 @@
   </div>
 <% end %>
 <div class="form-group">
-  <%= form.text_field :title, class: "form-control", placeholder: "Blog Title...." %>
+  <%= form.text_field :title, placeholder: "Blog Entry Title", class: "form-control" %>
 </div>
+
 <div class="form-group">
-  <%= form.text_field :author, class: "form-control", placeholder: "Your Name Here.." %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
 </div>
+
 <div class="form-group">
-  <%= form.text_area :blog_entry, class: "form-control", rows: 12, placeholder: "Tell us Something" %>
+  <%= form.text_area :blog_entry, placeholder: "Tell Us Something...", rows: 12, class: "form-control" %>
 </div>
+
 <div class="actions">
-  <%= form.submit "Post", class: "btn btn-primary" %>
+  <%= form.submit "Submit", class: "btn btn-primary" %>
 </div>
 <% end %>
