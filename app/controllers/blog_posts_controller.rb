@@ -1,6 +1,10 @@
 class BlogPostsController < ApplicationController
 
   before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+
+
+  include ApplicationHelper
 
   def index
     @blog_posts = BlogPost.all.page(params[:page])
@@ -15,6 +19,7 @@ class BlogPostsController < ApplicationController
   end
 
   def edit
+    no_access_visitors(current_user, @blog_post)
   end
 
   def new
